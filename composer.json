@@ -1,0 +1,13 @@
+{
+    "name": "agence-ho5/wp-classes",
+    "description": "Helper Classes for Wordpress",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fabien LEGE",
+            "email": "fabien.lege@ho5group.com"
+        }
+    ],
+    "require": {}
+}
