@@ -12,7 +12,7 @@
  *           >> https://agenceho5.com
  */
 
-namespace NSI\Helpers;
+namespace Nsi\Helpers;
 
 /**
  * Commun à tous les blocks compatibles Gutenberg
@@ -71,4 +71,9 @@ abstract class Block extends Singleton
    * @param array inner_blocks  : Inner blocks in case the block can contain other blocks
    */
   public function renderBlock( $fields, $attributes, $inner_blocks ){ }
+
+  /**
+   * Render the block programaticaly (not from gutenberg page)
+   */
+  public function render(){ }
 }

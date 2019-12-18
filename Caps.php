@@ -12,7 +12,7 @@
  *           >> https://agenceho5.com
  */
 
-namespace NSI\Helpers;
+namespace Nsi\Helpers;
 
 /**
  * Permet de gérer les autorisations relatives à ce module (capcités)

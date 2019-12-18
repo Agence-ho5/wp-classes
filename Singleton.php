@@ -12,7 +12,7 @@
  *           >> https://agenceho5.com
  */
 
-namespace NSI\Helpers;
+namespace Nsi\Helpers;
 
 abstract class Singleton
 {
