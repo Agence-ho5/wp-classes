@@ -11,6 +11,6 @@
     ],
     "require": {},
     "autoload": {
-        "psr-0": {"Composer\\CustomDirectoryInstaller": "src/"}
+        "psr-0": {"Nsi\\Helpers": "src/"}
     }
 }
