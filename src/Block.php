@@ -75,5 +75,5 @@ abstract class Block extends Singleton
   /**
    * Render the block programaticaly (not from gutenberg page)
    */
-  public function render(){ }
+  public static function render(){ }
 }
