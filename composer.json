@@ -9,5 +9,8 @@
             "email": "fabien.lege@ho5group.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-0": {"Composer\\CustomDirectoryInstaller": "src/"}
+    }
 }
