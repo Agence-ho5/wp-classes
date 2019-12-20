@@ -19,7 +19,7 @@ namespace Nsi\Helpers;
  */
 abstract class Block extends Singleton
 {
-  const BLOCK_NAME = self::BLOCK_NAME;
+  const BLOCK_NAME = 'undefined';
 
   /**
    * Constructor
@@ -33,7 +33,7 @@ abstract class Block extends Singleton
   /**
    * Enregistre le block pour qu'il apparaisse dans Gutenberg
    */
-  public function registerBlock() { }
+  public static function registerBlock() { }
 
   /**
    * Retourne l'ensemble des champs du Block (pour sa gestion dans gutenberg)
@@ -41,7 +41,7 @@ abstract class Block extends Singleton
    * @param array $fields : existing fields
    * @return array : fields modified or created
    */
-  public function getFields($fields = []){
+  public static function getFields($fields = []){
     return apply_filters(self::BLOCK_NAME.'-fields', $fields);
   }
 
@@ -54,12 +54,12 @@ abstract class Block extends Singleton
    * @param array inner_blocks  : Inner blocks in case the block can contain other blocks
    * @return string : ClassName of this block
    */
-  public function getClassName($attributes, $fields, $inner_blocks){
+  public static function getClassName($attributes = null, $fields = null, $inner_blocks = null){
     $className = self::BLOCK_NAME.' ';
     if(!empty($attributes['className'])){
       $className .= $attributes['className'];
     }
-    return apply_filter(self::BLOCK_NAME.'-classname', $className, $attributes, $fields, $inner_blocks);
+    return apply_filters(self::BLOCK_NAME.'-classname', $className, $attributes, $fields, $inner_blocks);
   }
 
   /**
@@ -70,7 +70,7 @@ abstract class Block extends Singleton
    * @param array attributes    : attributes lists (like className)
    * @param array inner_blocks  : Inner blocks in case the block can contain other blocks
    */
-  public function renderBlock( $fields, $attributes, $inner_blocks ){ }
+  public static function renderBlock( $fields, $attributes, $inner_blocks ){ }
 
   /**
    * Render the block programaticaly (not from gutenberg page)

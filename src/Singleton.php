@@ -16,18 +16,18 @@ namespace Nsi\Helpers;
 
 abstract class Singleton
 {
-    private static $instance = null;
+    protected static $instances = [];
 
     /**
      * gets the instance via lazy initialization (created on first usage)
      */
     public static final function getInstance(): Singleton
     {
-        if (static::$instance === null) {
-            static::$instance = new static();
+        if ( !isset( static::$instances[get_called_class()] ) ) {
+            static::$instances[get_called_class()] = new static();
         }
 
-        return static::$instance;
+        return static::$instances[get_called_class()];
     }
 
     /**
