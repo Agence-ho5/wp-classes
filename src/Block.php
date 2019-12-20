@@ -42,7 +42,7 @@ abstract class Block extends Singleton
    * @return array : fields modified or created
    */
   public static function getFields($fields = []){
-    return apply_filters(self::BLOCK_NAME.'-fields', $fields);
+    return apply_filters(static::BLOCK_NAME.'-fields', $fields);
   }
 
   /**
@@ -55,11 +55,11 @@ abstract class Block extends Singleton
    * @return string : ClassName of this block
    */
   public static function getClassName($attributes = null, $fields = null, $inner_blocks = null){
-    $className = self::BLOCK_NAME.' ';
+    $className = static::BLOCK_NAME.' ';
     if(!empty($attributes['className'])){
       $className .= $attributes['className'];
     }
-    return apply_filters(self::BLOCK_NAME.'-classname', $className, $attributes, $fields, $inner_blocks);
+    return apply_filters(static::BLOCK_NAME.'-classname', $className, $attributes, $fields, $inner_blocks);
   }
 
   /**
