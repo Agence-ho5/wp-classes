@@ -20,6 +20,7 @@ namespace Nsi\Helpers;
 abstract class Block extends Singleton
 {
   const BLOCK_NAME = 'undefined';
+  static $paths = [ ];
 
   /**
    * Constructor
@@ -28,6 +29,8 @@ abstract class Block extends Singleton
   protected function __construct(){
     add_action( 'carbon_fields_register_fields', [$this, 'registerBlock'] );
     add_action( 'after_setup_theme', function(){ \Carbon_Fields\Carbon_Fields::boot(); } );
+    $class_info = new \ReflectionClass(get_called_class());
+    static::$paths[get_called_class()] = dirname($class_info->getFileName());
   }
 
   /**
@@ -70,10 +73,15 @@ abstract class Block extends Singleton
    * @param array attributes    : attributes lists (like className)
    * @param array inner_blocks  : Inner blocks in case the block can contain other blocks
    */
-  public static function renderBlock( $fields, $attributes, $inner_blocks ){ }
+  public static function renderBlock( $fields = null, $attributes = null, $inner_blocks = null ){
+    $className = static::getClassName($attributes, $fields, $inner_blocks);
+    include static::$paths[get_called_class()] . '/' . static::BLOCK_NAME . '.view.php';
+  }
 
   /**
    * Render the block programaticaly (not from gutenberg page)
    */
-  public static function render(){ }
+  public static function render(){ 
+    static::renderBlock();
+  }
 }
