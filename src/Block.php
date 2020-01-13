@@ -75,7 +75,7 @@ abstract class Block extends Singleton
    */
   public static function renderBlock( $fields = null, $attributes = null, $inner_blocks = null ){
     $className = static::getClassName($attributes, $fields, $inner_blocks);
-    include static::$paths[get_called_class()] . '/' . static::BLOCK_NAME . '.view.php';
+    include static::$paths[get_called_class()] . '/view-' . static::BLOCK_NAME . '.php';
   }
 
   /**
