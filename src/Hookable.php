@@ -19,5 +19,5 @@ class Hookable extends Singleton {
     static::hooks();
   }
 
-  public static function hooks() {}
+  protected static function hooks() {}
 }
