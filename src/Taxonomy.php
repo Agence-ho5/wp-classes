@@ -34,7 +34,6 @@ class Taxonomy {
     $this->postTypes = $postTypes;
     $this->declare_taxonomy( $args, $labels );
     $this->set_caps( $caps );
-    add_action( 'map_meta_cap', [$this, 'map_meta_cap'], 10, 4 );
   }
 
   /**
@@ -48,18 +47,18 @@ class Taxonomy {
       'name'                       => _x( ucfirst( $this->taxonomy ) . 's', 'Catégorie', 'text_domain' ),
       'singular_name'              => _x( ucfirst( $this->taxonomy ), 'Catégorie', 'text_domain' ),
       'menu_name'                  => __( ucfirst( $this->taxonomy ) . 's', 'text_domain' ),
-      'parent_item'                => __( ucfirst( $this->post_type ) . ' Parent(e)', 'agenceho5' ),
-      'parent_item_colon'          => __( ucfirst( $this->post_type ) . ' Parent(e)', 'agenceho5' ),
-      'all_items'                  => __( ucfirst( $this->post_type ) . 's', 'agenceho5' ),
-      'add_new_item'               => __( 'Ajouter ' . $this->post_type, 'agenceho5' ),
+      'parent_item'                => __( ucfirst( $this->taxonomy ) . ' Parent(e)', 'agenceho5' ),
+      'parent_item_colon'          => __( ucfirst( $this->taxonomy ) . ' Parent(e)', 'agenceho5' ),
+      'all_items'                  => __( ucfirst( $this->taxonomy ) . 's', 'agenceho5' ),
+      'add_new_item'               => __( 'Ajouter ' . $this->taxonomy, 'agenceho5' ),
       'new_item_name'              => __( 'Nouveau', 'agenceho5' ),
-      'edit_item'                  => __( 'Modifier ' . $this->post_type, 'agenceho5' ),
+      'edit_item'                  => __( 'Modifier ' . $this->taxonomy, 'agenceho5' ),
       'update_item'                => __( 'Mettre à jour', 'agenceho5' ),
       'view_item'                  => __( 'Voir', 'agenceho5' ),
-      'search_items'               => __( 'Rechercher ' . $this->post_type, 'agenceho5' ),
-      'not_found'                  => __( 'Aucun(e) ' . $this->post_type, 'agenceho5' ),
-      'not_found'                  => __( 'Aucun(e) ' . $this->post_type, 'agenceho5' ),
-      'items_list'                 => __( 'Liste des ' . $this->post_type, 'agenceho5' ),
+      'search_items'               => __( 'Rechercher ' . $this->taxonomy, 'agenceho5' ),
+      'not_found'                  => __( 'Aucun(e) ' . $this->taxonomy, 'agenceho5' ),
+      'not_found'                  => __( 'Aucun(e) ' . $this->taxonomy, 'agenceho5' ),
+      'items_list'                 => __( 'Liste des ' . $this->taxonomy, 'agenceho5' ),
       'items_list_navigation'      => __( 'Items list navigation', 'agenceho5' ),
       'separate_items_with_commas' => __( 'Séparer les ' . ucfirst( $this->taxonomy ) . 's par des virgules', 'agenceho5' ),
       'add_or_remove_items'        => __( 'Ajouter ou supprimer des ' . ucfirst( $this->taxonomy ) . 's par des virgules', 'agenceho5' ),
