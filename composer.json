@@ -11,6 +11,8 @@
     ],
     "require": {},
     "autoload": {
-        "psr-0": {"Nsi\\Helpers": "src/"}
+        "psr-4": {
+            "": "src/"
+        }
     }
 }
