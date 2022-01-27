@@ -19,20 +19,23 @@ namespace Nsi\Helpers;
  */
 class Taxonomy {
   protected $taxonomy; // Identifiant de la taxonomy
+  protected $singular_name; // Singular name de la taxonomy, Par défaut, identique à $taxonomy
   protected $postTypes; // postTypes auxquels cette taxonomie doit être rattachée
 
   /**
    * Constructeur
-   * @param taxonomy string   : Identifiant du taxonomy
-   * @param postTypes array   : Tableau des postTypes auxquels cette taxonomie doit être rattachée
-   * @param args array        : Surcharge des arguments par défaut pour la déclaration de la taxonomy.
-   * @param labels array      : Surcharge des labels par défaut pour la déclaration de la taxonomy.
-   * @param caps array        : Surcharge des autorisation par défaut pour ce type de post
+   * @see https://developer.wordpress.org/reference/functions/register_taxonomy/
+   * @param taxonomy string     : Identifiant du taxonomy
+   * @param postTypes array     : Tableau des postTypes auxquels cette taxonomie doit être rattachée
+   * @param args array          : Surcharge des arguments par défaut pour la déclaration de la taxonomy.
+   * @param labels array|string : Surcharge des labels par défaut pour la déclaration de la taxonomy. Accepte soit un tableau au format préconiser pour les labels, soit une chaîne de caractères au singulier qui sera automatiquement adaptée.
+   * @param caps array          : Surcharge des autorisation par défaut pour ce type de post
    */
   public function __construct( $taxonomy, $postTypes, $args = [], $labels = [], $caps = [] ) {
-    $this->taxonomy  = $taxonomy;
-    $this->postTypes = $postTypes;
-    $this->declare_taxonomy( $args, $labels );
+    $this->taxonomy      = $taxonomy;
+    $this->singular_name = \is_string( $labels ) ? $labels : $taxonomy;
+    $this->postTypes     = $postTypes;
+    $this->declare_taxonomy( $args, is_array( $labels ) ? $labels : [] );
     $this->set_caps( $caps );
   }
 
@@ -44,26 +47,26 @@ class Taxonomy {
    */
   protected function declare_taxonomy( $args = [], $labels = [] ) {
     $default_labels = array(
-      'name'                       => _x( ucfirst( $this->taxonomy ) . 's', 'Catégorie', 'text_domain' ),
-      'singular_name'              => _x( ucfirst( $this->taxonomy ), 'Catégorie', 'text_domain' ),
-      'menu_name'                  => __( ucfirst( $this->taxonomy ) . 's', 'text_domain' ),
-      'parent_item'                => __( ucfirst( $this->taxonomy ) . ' Parent(e)', 'agenceho5' ),
-      'parent_item_colon'          => __( ucfirst( $this->taxonomy ) . ' Parent(e)', 'agenceho5' ),
-      'all_items'                  => __( ucfirst( $this->taxonomy ) . 's', 'agenceho5' ),
-      'add_new_item'               => __( 'Ajouter ' . $this->taxonomy, 'agenceho5' ),
+      'name'                       => _x( ucfirst( $this->singular_name ) . 's', 'Catégorie', 'text_domain' ),
+      'singular_name'              => _x( ucfirst( $this->singular_name ), 'Catégorie', 'text_domain' ),
+      'menu_name'                  => __( ucfirst( $this->singular_name ) . 's', 'text_domain' ),
+      'parent_item'                => __( ucfirst( $this->singular_name ) . ' Parent(e)', 'agenceho5' ),
+      'parent_item_colon'          => __( ucfirst( $this->singular_name ) . ' Parent(e)', 'agenceho5' ),
+      'all_items'                  => __( ucfirst( $this->singular_name ) . 's', 'agenceho5' ),
+      'add_new_item'               => __( 'Ajouter ' . $this->singular_name, 'agenceho5' ),
       'new_item_name'              => __( 'Nouveau', 'agenceho5' ),
-      'edit_item'                  => __( 'Modifier ' . $this->taxonomy, 'agenceho5' ),
+      'edit_item'                  => __( 'Modifier ' . $this->singular_name, 'agenceho5' ),
       'update_item'                => __( 'Mettre à jour', 'agenceho5' ),
       'view_item'                  => __( 'Voir', 'agenceho5' ),
-      'search_items'               => __( 'Rechercher ' . $this->taxonomy, 'agenceho5' ),
-      'not_found'                  => __( 'Aucun(e) ' . $this->taxonomy, 'agenceho5' ),
-      'not_found'                  => __( 'Aucun(e) ' . $this->taxonomy, 'agenceho5' ),
-      'items_list'                 => __( 'Liste des ' . $this->taxonomy, 'agenceho5' ),
+      'search_items'               => __( 'Rechercher ' . $this->singular_name, 'agenceho5' ),
+      'not_found'                  => __( 'Aucun(e) ' . $this->singular_name, 'agenceho5' ),
+      'not_found'                  => __( 'Aucun(e) ' . $this->singular_name, 'agenceho5' ),
+      'items_list'                 => __( 'Liste des ' . $this->singular_name, 'agenceho5' ),
       'items_list_navigation'      => __( 'Items list navigation', 'agenceho5' ),
-      'separate_items_with_commas' => __( 'Séparer les ' . ucfirst( $this->taxonomy ) . 's par des virgules', 'agenceho5' ),
-      'add_or_remove_items'        => __( 'Ajouter ou supprimer des ' . ucfirst( $this->taxonomy ) . 's par des virgules', 'agenceho5' ),
+      'separate_items_with_commas' => __( 'Séparer les ' . ucfirst( $this->singular_name ) . 's par des virgules', 'agenceho5' ),
+      'add_or_remove_items'        => __( 'Ajouter ou supprimer des ' . ucfirst( $this->singular_name ) . 's par des virgules', 'agenceho5' ),
       'choose_from_most_used'      => __( 'Choisir parmis les plus utilisé(e)s', 'agenceho5' ),
-      'popular_items'              => __( ucfirst( $this->taxonomy ) . 's populaires', 'agenceho5' ),
+      'popular_items'              => __( ucfirst( $this->singular_name ) . 's populaires', 'agenceho5' ),
     );
 
     $labels = array_merge( $default_labels, $labels );
@@ -127,3 +130,4 @@ class Taxonomy {
   }
 
 }
+
