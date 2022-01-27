@@ -19,19 +19,22 @@ namespace Nsi\Helpers;
  */
 class PostType {
   protected $post_type; // Identifiant du post type
+  protected $singular_name; // Singular name du post type, Par défaut, identique à $post_type
 
   protected $title_placeholder = null;
 
   /**
    * Constructeur
-   * @param post_type string  : Identifiant du post_type
-   * @param title_placeholder : Définit le placeholder du champ titre pour ce post_type
-   * @param args array        : Surcharge des arguments par défaut pour la déclaration du post type.
-   * @param labels array      : Surcharge des labels par défaut pour la déclaration du post type.
-   * @param caps array        : Surcharge des autorisation par défaut pour ce type de post
+   * @see https://developer.wordpress.org/reference/functions/register_post_type/
+   * @param post_type string    : Identifiant du post_type
+   * @param title_placeholder   : Définit le placeholder du champ titre pour ce post_type
+   * @param args array          : Surcharge des arguments par défaut pour la déclaration du post type.
+   * @param labels array|string : Surcharge des labels par défaut pour la déclaration du post type. Accepte soit un tableau au format préconiser pour les labels, soit une chaîne de caractères au singulier qui sera automatiquement adaptée.
+   * @param caps array          : Surcharge des autorisation par défaut pour ce type de post
    */
   public function __construct( $post_type, $title_placeholder = null, $args = [], $labels = [], $caps = [] ) {
-    $this->post_type = $post_type;
+    $this->post_type     = $post_type;
+    $this->singular_name = \is_string( $labels ) ? $labels : $post_type;
     $this->declare_post_type( $args, $labels );
     $this->set_caps( $caps );
     add_action( 'map_meta_cap', [$this, 'map_meta_cap'], 10, 4 );
@@ -49,31 +52,31 @@ class PostType {
    */
   protected function declare_post_type( $args = [], $labels = [] ) {
     $default_labels = array(
-      'name'                  => _x( ucfirst( $this->post_type ) . 's', 'Post Type General Name', 'agenceho5' ),
-      'singular_name'         => _x( ucfirst( $this->post_type ), 'Post Type Singular Name', 'agenceho5' ),
-      'menu_name'             => __( ucfirst( $this->post_type ) . 's', 'agenceho5' ),
-      'name_admin_bar'        => __( ucfirst( $this->post_type ) . 's', 'agenceho5' ),
+      'name'                  => _x( ucfirst( $this->singular_name ) . 's', 'Post Type General Name', 'agenceho5' ),
+      'singular_name'         => _x( ucfirst( $this->singular_name ), 'Post Type Singular Name', 'agenceho5' ),
+      'menu_name'             => __( ucfirst( $this->singular_name ) . 's', 'agenceho5' ),
+      'name_admin_bar'        => __( ucfirst( $this->singular_name ) . 's', 'agenceho5' ),
       'archives'              => __( 'Tout voir', 'agenceho5' ),
       'attributes'            => __( 'Attributs', 'agenceho5' ),
-      'parent_item_colon'     => __( ucfirst( $this->post_type ) . ' Parent(e)', 'agenceho5' ),
-      'all_items'             => __( ucfirst( $this->post_type ) . 's', 'agenceho5' ),
-      'add_new_item'          => __( 'Ajouter ' . $this->post_type, 'agenceho5' ),
+      'parent_item_colon'     => __( ucfirst( $this->singular_name ) . ' Parent(e)', 'agenceho5' ),
+      'all_items'             => __( ucfirst( $this->singular_name ) . 's', 'agenceho5' ),
+      'add_new_item'          => __( 'Ajouter ' . $this->singular_name, 'agenceho5' ),
       'add_new'               => __( 'Ajouter', 'agenceho5' ),
       'new_item'              => __( 'Nouveau', 'agenceho5' ),
-      'edit_item'             => __( 'Modifier ' . $this->post_type, 'agenceho5' ),
+      'edit_item'             => __( 'Modifier ' . $this->singular_name, 'agenceho5' ),
       'update_item'           => __( 'Mettre à jour', 'agenceho5' ),
       'view_item'             => __( 'Voir', 'agenceho5' ),
-      'view_items'            => __( 'Voir les ' . $this->post_type, 'agenceho5' ),
-      'search_items'          => __( 'Rechercher ' . $this->post_type, 'agenceho5' ),
-      'not_found'             => __( 'Aucun(e) ' . $this->post_type, 'agenceho5' ),
-      'not_found_in_trash'    => __( 'Aucun(e) ' . $this->post_type . ' dans la corbeille', 'agenceho5' ),
+      'view_items'            => __( 'Voir les ' . $this->singular_name, 'agenceho5' ),
+      'search_items'          => __( 'Rechercher ' . $this->singular_name, 'agenceho5' ),
+      'not_found'             => __( 'Aucun(e) ' . $this->singular_name, 'agenceho5' ),
+      'not_found_in_trash'    => __( 'Aucun(e) ' . $this->singular_name . ' dans la corbeille', 'agenceho5' ),
       'featured_image'        => __( 'Image', 'agenceho5' ),
       'set_featured_image'    => __( 'Définir le l\'image', 'agenceho5' ),
       'remove_featured_image' => __( 'Retirer le l\'image', 'agenceho5' ),
       'use_featured_image'    => __( 'Définir un l\'image', 'agenceho5' ),
       'insert_into_item'      => __( 'Insérer', 'agenceho5' ),
       'uploaded_to_this_item' => __( 'Télécharger', 'agenceho5' ),
-      'items_list'            => __( 'Liste des ' . $this->post_type, 'agenceho5' ),
+      'items_list'            => __( 'Liste des ' . $this->singular_name, 'agenceho5' ),
       'items_list_navigation' => __( 'Items list navigation', 'agenceho5' ),
       'filter_items_list'     => __( 'Filter items list', 'agenceho5' ),
     );
@@ -81,7 +84,7 @@ class PostType {
     $labels = array_merge( $default_labels, $labels );
 
     $default_args = array(
-      'label'               => __( ucfirst( $this->post_type ), 'agenceho5' ),
+      'label'               => __( ucfirst( $this->singular_name ), 'agenceho5' ),
       'description'         => null,
       'labels'              => $labels,
       'supports'            => array( 'title', 'revisions', 'thumbnail', 'author', 'editor', 'page-attributes', 'excerpt' ),
