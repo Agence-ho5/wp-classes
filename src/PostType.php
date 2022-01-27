@@ -35,7 +35,7 @@ class PostType {
   public function __construct( $post_type, $title_placeholder = null, $args = [], $labels = [], $caps = [] ) {
     $this->post_type     = $post_type;
     $this->singular_name = \is_string( $labels ) ? $labels : $post_type;
-    $this->declare_post_type( $args, $labels );
+    $this->declare_post_type( $args, is_array( $labels ) ? $labels : [] );
     $this->set_caps( $caps );
     add_action( 'map_meta_cap', [$this, 'map_meta_cap'], 10, 4 );
     if ( $title_placeholder ) {
@@ -202,3 +202,4 @@ class PostType {
   }
 
 }
+
