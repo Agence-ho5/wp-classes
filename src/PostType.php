@@ -149,17 +149,17 @@ class PostType {
     // Ecriture
     if ( $cap == 'edit_' . $this->post_type ) {
       if ( empty( $args[0] ) || $user_id == get_post_field( 'post_author', $args[0] ) ) {
-        $caps = 'edit_' . $this->post_type;
+        $caps = ['edit_' . $this->post_type];
       } else {
-        $caps = 'edit_others_' . $this->post_type . 's';
+        $caps = ['edit_others_' . $this->post_type . 's'];
       }
     }
 
     if ( $cap == 'delete_' . $this->post_type . 's' ) {
       if ( empty( $args[0] ) || $user_id == get_post_field( 'post_author', $args[0] ) ) {
-        $caps = 'delete_' . $this->post_type . 's';
+        $caps = ['delete_' . $this->post_type . 's'];
       } else {
-        $caps = 'delete_others_' . $this->post_type . 's';
+        $caps = ['delete_others_' . $this->post_type . 's'];
       }
     }
     return $caps;
@@ -202,4 +202,3 @@ class PostType {
   }
 
 }
-
